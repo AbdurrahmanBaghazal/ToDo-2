@@ -1,0 +1,172 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* Root variables */
+:root {
+  --primary: #3b82f6; /* blue from design */
+  --background: #e5e7eb;
+  --card-bg: #ffffff;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --border-light: #e5e7eb;
+  --error: #e7195a;
+}
+
+/* Global */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: var(--background);
+  color: var(--text-main);
+}
+
+/* Header */
+header {
+  background: transparent;
+}
+
+header .container {
+  max-width: 420px;
+  margin: 20px auto 0;
+  padding: 0 16px;
+}
+
+header a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-main);
+}
+
+/* Page wrapper */
+.pages {
+  max-width: 420px;
+  margin: 20px auto;
+  padding: 0 16px 40px;
+}
+
+/* Main card container */
+.home {
+  display: block;
+  background: var(--card-bg);
+  border-radius: 24px;
+  padding: 20px 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Task card */
+.task-details {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Task title */
+.task-details h4 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Task subtitle / description */
+.task-details p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Checkbox / delete icon */
+.task-details span {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: white;
+  color: var(--primary);
+  font-size: 0.8rem;
+}
+
+/* Form */
+form {
+  margin-top: 24px;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Input */
+input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Button */
+form button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+form button:hover {
+  background: #2563eb;
+}
+
+/* Error handling */
+div.error {
+  padding: 10px;
+  border-radius: 10px;
+  background: #fee2e2;
+  color: var(--error);
+  font-size: 0.85rem;
+}
+
+input.error {
+  border-color: var(--error);
+}
+
+.task-details.completed {
+  opacity: 0.6;
+}
+
+.task-details.completed h4 {
+  text-decoration: line-through;
+}
+
+.task-details span {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
