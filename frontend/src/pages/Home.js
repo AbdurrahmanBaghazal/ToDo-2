@@ -8,10 +8,15 @@ import TaskForm from '../components/TaskForm'
 
 const Home = () => {
     const {tasks, dispatch} = useTasksContext()
-
+    const API = process.env.REACT_APP_API_URL
+    
     useEffect(() => {
         const fetchTasks = async () => {
-            const response = await fetch('/api/tasks')
+            const response = await fetch(`${API}/api/tasks`)
+
+            
+
+
             const json = await response.json()
 
                 if (response.ok) {

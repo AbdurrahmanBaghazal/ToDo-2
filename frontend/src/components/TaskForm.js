@@ -16,13 +16,14 @@ const TaskForm = () => {
 
         const task = {title, description, start_date, end_date}
         
-        const response = await fetch('/api/tasks', {
-            method: 'POST',
-            body: JSON.stringify(task),
-            headers: {
-                'content-type': 'application/json'
-            }
+        const API = process.env.REACT_APP_API_URL
+
+        const response = await fetch(`${API}/api/tasks`, {
+        method: 'POST',
+        body: JSON.stringify(task),
+        headers: { 'content-type': 'application/json' }
         })
+
         const json = await response.json()
 
         if (!response.ok){
