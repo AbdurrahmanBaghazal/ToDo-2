@@ -1,34 +1,52 @@
-require('dotenv').config()
+require("dotenv").config()
 
-const express = require('express')
-const mongoose = require('mongoose')
-const tasksRoutes = require('./routes/tasks')
+const express = require("express")
+const mongoose = require("mongoose")
+const cors = require("cors")
+const tasksRoutes = require("./routes/tasks")
 
-
-//express app
 const app = express()
 
-//meddleware
+app.use(cors({ origin: true, credentials: true }))
 app.use(express.json())
 
-app.use((req, res, next) => {
-    console.log(req.path, req.method)
+mongoose.set("bufferCommands", false)
+
+let cached = global._mongoose
+if (!cached) cached = global._mongoose = { conn: null, promise: null }
+
+async function connectDB() {
+  if (cached.conn) return cached.conn
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(process.env.MONGO_URI, {
+        serverSelectionTimeoutMS: 20000,
+        connectTimeoutMS: 20000,
+      })
+      .then((m) => m)
+  }
+  cached.conn = await cached.promise
+  return cached.conn
+}
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDB()
     next()
+  } catch (e) {
+    res.status(500).json({ error: "DB connection failed", details: String(e.message || e) })
+  }
 })
 
-//routs
-app.use('/api/tasks', tasksRoutes)
+app.use("/api/tasks", tasksRoutes)
 
-//connect to db
-mongoose.connect(process.env.MONGO_URI)
+module.exports = app
+
+if (require.main === module) {
+  const port = process.env.PORT || 4000
+  connectDB()
     .then(() => {
- //listen for requests
-        app.listen(process.env.PORT, () => {
-            console.log('connected to db and listen on port', process.env.PORT)
-        })
+      app.listen(port, () => console.log("listening on", port))
     })
-
-    .catch((error)=>{
-        console.log(error)
-    })
-
+    .catch((e) => console.error(e))
+}
